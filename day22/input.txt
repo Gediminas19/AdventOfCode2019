@@ -1,0 +1,101 @@
+100
+increment 31
+stack
+cut -7558
+increment 49
+cut 194
+increment 23
+cut -4891
+increment 53
+cut 5938
+increment 61
+cut 7454
+stack
+increment 31
+cut 3138
+increment 53
+cut 3553
+increment 61
+cut -5824
+increment 42
+cut -889
+increment 34
+cut 7128
+increment 42
+cut -9003
+increment 75
+cut 13
+increment 75
+cut -3065
+increment 74
+cut -8156
+increment 39
+cut 4242
+increment 24
+cut -405
+increment 27
+cut 6273
+increment 19
+cut -9826
+increment 58
+stack
+cut -6927
+increment 65
+cut -9906
+increment 31
+stack
+increment 42
+stack
+increment 39
+cut -4271
+stack
+increment 32
+cut -8799
+increment 69
+cut 2277
+increment 55
+cut 2871
+increment 54
+cut -2118
+increment 15
+cut 1529
+increment 57
+cut -4745
+increment 23
+cut -5959
+increment 58
+stack
+increment 48
+stack
+cut 2501
+stack
+increment 42
+stack
+cut 831
+increment 74
+cut -3119
+increment 33
+cut 967
+increment 69
+cut 9191
+increment 9
+cut 5489
+increment 62
+cut -9107
+increment 14
+cut -7717
+increment 56
+cut 7900
+increment 49
+cut 631
+increment 14
+stack
+increment 58
+cut -9978
+increment 48
+stack
+increment 66
+cut -1554
+stack
+cut 897
+increment 36

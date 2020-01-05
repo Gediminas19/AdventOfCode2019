@@ -1,0 +1,91 @@
+Dist to oxygen: 224
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXX#####X#####X#######X#####X#####XXXX
+XXXXXXXXXX#     #     #       #     #     XXXX
+XXXXXXXXXXX ### ### # X## ### ### # ### # XXXX
+XXXXXXXXXXX #       X #   XX#     #   X XoXXXX
+XXXXXXXXX## # ######X X ##XXX####XX## X ##XXXX
+XXXXXXXX#   #   #   X X   XXXXXXXXXXX X   XXXX
+XXXXXXXXX ####### # X ### ##XXXXXXXXX ### XXXX
+XXXXXXXXX         X #   X   XXXXXXXX#   X XXXX
+XXXXXXXXXX########X ### ### XXXXXXX#### X XXXX
+XXXXXXXXXXXXXXXXXXX   #   X XXXXXXX     X XXXX
+XXXXXXXXXXXXXXXXX#### X## X XXXXXXX ####X XXXX
+XXXXXXXXXXXXXXXX#   X X   X XXXXXXX #   X XXXX
+XXXXXXXXXXXXXXX## # # X ### XXXXXXX X # X XXXX
+XXXXXXXXXXXXXX#   #   X #   XXXXXXX X X X XXXX
+XXXXXXXXXXXXX## ######X # #XXXXXXXX X X # XXXX
+XXXXXXXXXXXX#   X     #   XXXXXXXXX X #   XXXX
+XXXXXXXXXXXXX ### ### ###XXXXXXXXXX X ###XXXXX
+XXXXXXXXXXXXX     XXX   XXXXXXXXXXX X   XXXXXX
+XXXXXXXXXXXXXX####XXXX# XXXXXXXXXXX ### ##XXXX
+XXXXXXXXXXXXXXXXXXXXXXX XXXXXXXXXX#   X   XXXX
+XXXXXXXXXXXXXXXXXXXXXXX XXXXXXXXXXX## ### XXXX
+XXXXXXXXXXXXXXXXXXXXXXX XXXXXXXXXXXX#   X XXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX## X XXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX X XXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX X XXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX X XXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX # XXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX#   XXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX##XXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+Maxdist from oxygen: 284
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXX#######X#####X#####X#######X#####X#####XXXX
+XX#       #     #     #       #     #     #XXX
+XXX###### # ### ### # ### ### ### # ### # #XXX
+XX#       # #       # #   # #     #   # #o#XXX
+XX# ### ### # ####### # ### ######### # ##XXXX
+XX# # # #   #   #   # #   #   #     # #   #XXX
+XX# # # # ####### # # ### ### # # # # ### #XXX
+XX# # # #         # #   #   #   # # #   # #XXX
+XX# # # ########### ### ### # ### ##### # #XXX
+XX# #     #       #   #   # # #   #     # #XXX
+XX# ##### ##### ##### ### # ### # # ##### #XXX
+XX#     #       #   # #   # #   # # #   # #XXX
+XX# ### ##### ### # # # ### # ### # # # # #XXX
+XX#   #   #   #   #   # #   # #   # # # # #XXX
+XXX#### # # ### ####### # ### # ### # # # #XXX
+XX#   # # # #   #     #   #   #   # # #   #XXX
+XX# # ### # # ### ### ##### ##X## # # ### #XXX
+XX# #     # #     # #   #     # # # #   # #XXX
+XX# ####### ####### ### # ### # # # ### ##XXXX
+XX#       # #         # # #   #   #   #   #XXX
+XX# ##### # # ### ### # # # ### ##### ### #XXX
+XX# # #   # # # #   # # # # #       #   # #XXX
+XX# # # ##### # ### ####### ####### ### # #XXX
+XX# # #     # #   #         #   #   # # # #XXX
+XX# # ##### # # # ### ####### # # ### # # #XXX
+XX#     #   # # #   #         # #   # # # #XXX
+XXX## ### ### # ### ########### ### # # # #XXX
+XX# # #   #   # #         #     #     #   #XXX
+XX# # # ### ##### ####### # ##### ####### #XXX
+XX#   #   # #   #       # # #     #       #XXX
+XXX###### # # # ####### ### ### ### ######XXXX
+XX#     # # # #       #   #   # #   #     #XXX
+XX# ### # # # ####### ### ### # # ### ####XXXX
+XX# # # # # #       #     #   # #   #     #XXX
+XX# # # # # # ##### ##### # ##X#### ##### #XXX
+XX# #   # # #   #   #     #   #     #     #XXX
+XX# # ### # ### # ########### # ##### ### #XXX
+XX# #     #   # #           # # #     #   #XXX
+XX# ######### ########### # # # ### ### ##XXXX
+XX#                       # #       #     #XXX
+XXX#######################X#X#######X#####XXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX

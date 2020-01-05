@@ -1,0 +1,31 @@
+Hull Breach
+  •	South: Engineering (fuel cell)
+  •	West: Holodeck (mouse)
+    o	North: Scilab (photons X)
+      	East: Arcade (klein bottle)
+    o	West: Passages (infinite loop x)
+      	West: Stable (escape pod x)
+      	South: Observatory (dark matter)
+  •	North: Hallway
+    o	North: Storage
+    o	West: Sick Bay
+      	South: Kitchen (planetoid)
+        •	West: Warp Drive (antenna)
+        •	East: Navigation (mutex)
+          o	East: Gift Wrapping Center
+          o	South: Hot Chocolate (whirled peas)
+            	West: Crew Quarters (molten lava x)
+            	South: Corridor (giant electromagnet x)
+              •	East: Security Checkpoint
+
+Total Touchable Items
+  •	Used at Airlock
+    o	planetoid
+    o	mutex
+    o	antenna
+    o	fuel cell
+  •	Left Behind
+    o	whirled peas
+    o	mouse
+    o	klein bottle
+    o	dark matter
