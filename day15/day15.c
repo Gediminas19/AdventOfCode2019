@@ -2,7 +2,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
-#include "intcode_comp.h"
+#include "../intcode_comp/intcode_comp.h"
 
 bool recurse(intcode_comp *comp, char **room, int x, int y, int attempt,
              int dist, bool halt, int *solution, int *maxdist) {
@@ -102,10 +102,7 @@ void sweep(intcode_comp *comp, char **room, int x, int y, int *maxdist) {
 
 int main() {
   int len;
-  scanf("%d\n", &len);
-
-  long *work = calloc(len, sizeof(long));
-  for (int j = 0; j < len; j++) scanf("%li,", &work[j]);
+  long *work = parse_input("input.txt", &len);
 
   char **room = calloc(2001, sizeof(char*));
   for (int j = 0; j < 2001; j++) {

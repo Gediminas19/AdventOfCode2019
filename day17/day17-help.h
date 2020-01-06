@@ -7,6 +7,6 @@
 #define DAY17_HELP_H
 
 void replaceAll(char *working, char code, char *to_replace, char *origin);
-void decompose(char *to_process, char *routineA, char *routineB, char *routineC, char *routineMain);
+bool decompose(char *to_process, char *routineA, char *routineB, char *routineC, char *routineMain);
 
 #endif

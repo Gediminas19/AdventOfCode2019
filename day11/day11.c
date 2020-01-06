@@ -2,30 +2,22 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
-#include "intcode_comp.h"
+#include "../intcode_comp/intcode_comp.h"
 
-int main()
-{
-  int len;
-  scanf("%d\n", &len);
-
-  long *work = calloc(len, sizeof(long));
-  for (int j = 0; j < len; j++) scanf("%li,", &work[j]);
-
+int paint(intcode_comp *comp, bool start_on_white) {
   bool **painter = calloc(2001, sizeof(bool*));
   for (int j = 0; j < 2001; j++) painter[j] = calloc(2001, sizeof(bool));
   int **panelia = calloc(2001, sizeof(int*));
   for (int j = 0; j < 2001; j++) panelia[j] = calloc(2001, sizeof(int));
   int x = 1000, y = 1000, dir = 0;
-  panelia[x][y] = 1; // Part 2; comment out for part 1
+  if (start_on_white) panelia[x][y] = 1;
 
-  intcode_comp *comp = init_comp(work, len);
   add_input(comp, panelia[x][y]);
   while (run(comp)) {
     int color = get_output(comp);
     int turn = get_output(comp)*2 - 1;
-    printf("(%d, %d):: ", x, y);
-    printf("Color: %d, Turn: %d\n", color, turn);
+    // printf("(%d, %d):: ", x, y);
+    // printf("Color: %d, Turn: %d\n", color, turn);
     panelia[x][y] = color;
     painter[x][y] = true;
     dir = (dir + turn + 4) % 4;
@@ -52,17 +44,32 @@ int main()
       if (painter[j][k]) painted++;
     }
   }
-  printf("%d\n", painted);
 
-  for (int j = 1500; j >= 1495; j--) {
-    for (int k = 1500; k <= 1540; k++) {
+  if (!start_on_white) return painted;
+
+  for (int j = 1000; j >= 995; j--) {
+    for (int k = 1000; k <= 1040; k++) {
       if (panelia[k][j] == 1) printf("\u25a0");
       else printf(" ");
     }
     puts("");
   }
 
+  free_comp(comp);
+  return painted;
+}
+
+int main() {
+  int len;
+  long *work = parse_input("input.txt", &len);
+
+  intcode_comp *comp = init_comp(work, len);
+  printf("Part 1 Total Painted Panels: %d\n", paint(comp, false));
+
+  reset_comp(comp, work, len);
+  puts("Part 2 Code:");
+  paint(comp, true);
+
   free(work);
-  free(comp);
   return 0;
 }

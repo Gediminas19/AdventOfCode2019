@@ -3,49 +3,38 @@
 #include <stdlib.h>
 #include <string.h>
 #include <limits.h>
-#include "intcode_comp.h"
+#include "../intcode_comp/intcode_comp.h"
 
 int main() {
-  FILE *fp = fopen("input.txt" , "r");
-
   int len;
-  fscanf(fp, "%d\n", &len);
-
-  long *work = calloc(len, sizeof(long));
-  for (int j = 0; j < len; j++) fscanf(fp, "%li,", &work[j]);
+  long *work = parse_input("input.txt", &len);
 
   intcode_comp *comp = init_comp(work, len);
 
   run(comp);
-  while (more_outputs(comp)) printf("%c", (char) get_output(comp));
+  ascii_out(comp);
 
-  char run_commands[9][10] = {"NOT C J\n", "AND D J\n", "AND H J\n", "NOT A T\n", "OR T J\n", "NOT B T\n", "AND D T\n", "OR T J\n", "RUN\n"};
-  for (int j = 0; j < 9; j++) for (int k = 0; k < strlen(run_commands[j]); k++)
-    add_input(comp, run_commands[j][k]);
-
-  run(comp);
-  long out;
-  while (more_outputs(comp)) {
-    out = get_output(comp);
-    printf("%c", (char) out);
+  char *walk_commands[] = {"NOT C J", "AND D J", "NOT A T", "OR T J", "WALK"};
+  for (int j = 0; j < 5; j++) {
+    puts(walk_commands[j]);
+    ascii_in_ln(comp, walk_commands[j]);
   }
-  printf("Running Hull Damage: %ld\n", out);
-
+  run(comp);
+  ascii_out(comp);
+  printf("Walking Hull Damage: %ld\n\n", get_output(comp));
 
   reset_comp(comp, work, len);
   run(comp);
-  while (more_outputs(comp)) printf("%c", (char) get_output(comp));
+  ascii_out(comp);
 
-  char walk_commands[5][10] = {"NOT C J\n", "AND D J\n", "NOT A T\n", "OR T J\n", "WALK\n"};
-  for (int j = 0; j < 5; j++) for (int k = 0; k < strlen(walk_commands[j]); k++)
-    add_input(comp, walk_commands[j][k]);
-
-  run(comp);
-  while (more_outputs(comp)) {
-    out = get_output(comp);
-    printf("%c", (char) out);
+  char *run_commands[] = {"NOT C J", "AND D J", "AND H J", "NOT A T", "OR T J", "NOT B T", "AND D T", "OR T J", "RUN"};
+  for (int j = 0; j < 9; j++) {
+    puts(run_commands[j]);
+    ascii_in_ln(comp, run_commands[j]);
   }
-  printf("Walking Hull Damage: %ld\n", out);
+  run(comp);
+  ascii_out(comp);
+  printf("Running Hull Damage: %ld\n", get_output(comp));
 
   free(work);
   free_comp(comp);

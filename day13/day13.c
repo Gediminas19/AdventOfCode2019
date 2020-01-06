@@ -2,14 +2,11 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
-#include "intcode_comp.h"
+#include "../intcode_comp/intcode_comp.h"
 
 int main() {
   int len;
-  scanf("%d\n", &len);
-
-  long *work = calloc(len, sizeof(long));
-  for (int j = 0; j < len; j++) scanf("%li,", &work[j]);
+  long *work = parse_input("input.txt", &len);
   work[0] = 2;
 
   int board[23][45];
@@ -59,6 +56,7 @@ int main() {
   }
   printf("\033[%d;%dH", 26, 0);
   printf("Blocks: %d | Score: %d", blocks, score);
+  getchar();
 
   // Part 2
   while (blocks != 0) {

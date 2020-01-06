@@ -3,17 +3,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include <limits.h>
-#include "intcode_comp.h"
+#include "../intcode_comp/intcode_comp.h"
 
 int main() {
-  FILE *fp = fopen("input.txt" , "r");
-
   int len;
-  fscanf(fp, "%d\n", &len);
-
-  long *work = calloc(len, sizeof(long));
-  for (int j = 0; j < len; j++) fscanf(fp, "%li,", &work[j]);
-  fclose(fp);
+  long *work = parse_input("input.txt", &len);
 
   intcode_comp *comp = init_comp(work, len);
 
@@ -27,6 +21,6 @@ int main() {
   }
 
   free(work);
-  // free_comp(comp);
+  free_comp(comp);
   return 0;
 }

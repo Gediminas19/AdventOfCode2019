@@ -18,7 +18,7 @@ void replaceAll(char *working, char code, char *to_replace, char *origin) {
   working[apos + 1 + origin - searchstart + strlen(origin)] = '\0';
 }
 
-void decompose(char *to_process, char *routineA, char *routineB, char *routineC, char *routineMain) {
+bool decompose(char *to_process, char *routineA, char *routineB, char *routineC, char *routineMain) {
   int total_len = strlen(to_process);
   char *workingA = calloc(total_len + 1, sizeof(char));
   char *workingB = calloc(total_len + 1, sizeof(char));
@@ -52,15 +52,15 @@ void decompose(char *to_process, char *routineA, char *routineB, char *routineC,
         // printf("%s\n", workingC);
 
         if (strspn(workingC, "ABC") == strlen(workingC)) {
-          routineA[strlen(routineA) - 1] = '\n';
-          routineB[strlen(routineB) - 1] = '\n';
-          routineC[strlen(routineC) - 1] = '\n';
+          routineA[strlen(routineA) - 1] = '\0';
+          routineB[strlen(routineB) - 1] = '\0';
+          routineC[strlen(routineC) - 1] = '\0';
           for (int j = 0; j < strlen(workingC); j++) {
             routineMain[j*2] = workingC[j];
             routineMain[j*2 + 1] = ',';
           }
-          routineMain[strlen(routineMain) - 1] = '\n';
-          return;
+          routineMain[strlen(routineMain) - 1] = '\0';
+          return true;
         }
 
         memset(routineC, 0, 22*sizeof(char));
@@ -77,4 +77,6 @@ void decompose(char *to_process, char *routineA, char *routineB, char *routineC,
     lenA--;
     while (lenA > 0 && to_process[anchorA + lenA - 1] != ',') lenA--;
   }
+
+  return false;
 }

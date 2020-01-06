@@ -2,18 +2,12 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
-#include "intcode_comp.h"
 #include "day17-help.h"
+#include "../intcode_comp/intcode_comp.h"
 
 int main() {
-  FILE *fp = fopen("input.txt" , "r");
-
   int len;
-  fscanf(fp, "%d\n", &len);
-
-  long *work = calloc(len, sizeof(long));
-  for (int j = 0; j < len; j++) fscanf(fp, "%li,", &work[j]);
-  fclose(fp);
+  long *work = parse_input("input.txt", &len);
 
   intcode_comp *comp = init_comp(work, len);
 
@@ -21,8 +15,8 @@ int main() {
 
   int botx, boty, botdir;
   int row = 1, col = 1;
-  char view[53][47]; // found by reading output manually
-  memset(view, '.', 53*47*sizeof(char));
+  char view[100][100]; // big enough
+  memset(view, '.', 10000*sizeof(char));
   while (more_outputs(comp)) {
     char draw = (char) get_output(comp);
     printf("%c", draw);
@@ -115,30 +109,33 @@ int main() {
   char *routineB = calloc(22, sizeof(char));
   char *routineC = calloc(22, sizeof(char));
   char *routineMain = calloc(22, sizeof(char));
-  decompose(twists, routineA, routineB, routineC, routineMain);
+  if (!decompose(twists, routineA, routineB, routineC, routineMain)) {
+    printf("Failure to decompose path into 3 subroutines!");
+    return 0;
+  }
 
   work[0] = 2;
   reset_comp(comp, work, len);
 
   run(comp);
   ascii_out(comp);
-  printf("%s", routineMain);
-  ascii_in(comp, routineMain);
+  puts(routineMain);
+  ascii_in_ln(comp, routineMain);
 
   run(comp);
   ascii_out(comp);
-  printf("%s", routineA);
-  ascii_in(comp, routineA);
+  puts(routineA);
+  ascii_in_ln(comp, routineA);
 
   run(comp);
   ascii_out(comp);
-  printf("%s", routineB);
-  ascii_in(comp, routineB);
+  puts(routineB);
+  ascii_in_ln(comp, routineB);
 
   run(comp);
   ascii_out(comp);
-  printf("%s", routineC);
-  ascii_in(comp, routineC);
+  puts(routineC);
+  ascii_in_ln(comp, routineC);
 
   run(comp);
   ascii_out(comp);
