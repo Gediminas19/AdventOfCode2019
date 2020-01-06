@@ -1,8 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// #define ROWCOUNT 33
-// #define COLCOUNT 41
 #define ROWCOUNT 117
 #define COLCOUNT 123
 

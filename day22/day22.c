@@ -15,21 +15,20 @@ __int128_t modpow(__int128_t base, __int128_t exp, __int128_t modulus) {
 }
 
 void compute_lincomb(char **commands, int com_count, __int128_t len, __int128_t *coeffs) {
-  int read_num;
-  char command[20];
   coeffs[0] = 1;
   coeffs[1] = 0;
   for (int j = 0; j < com_count; j++) {
-    sscanf(commands[j], "%s %d", command, &read_num);
-    if (strcmp(command, "stack") == 0) {
+    if (strstr(commands[j], "stack") != NULL) {
       coeffs[0] *= -1;
       coeffs[1] *= -1;
       coeffs[1] -= 1;
-    } else if (strcmp(command, "cut") == 0) {
-      coeffs[1] -= read_num;
-    } else if (strcmp(command, "increment") == 0) {
-      coeffs[0] *= read_num;
-      coeffs[1] *= read_num;
+    } else if (strstr(commands[j], "cut") != NULL) {
+      int cut_num = atoi(commands[j] + strcspn(commands[j], "1234567890-"));
+      coeffs[1] -= cut_num;
+    } else if (strstr(commands[j], "increment") != NULL) {
+      int incr_num = atoi(commands[j] + strcspn(commands[j], "1234567890-"));
+      coeffs[0] *= incr_num;
+      coeffs[1] *= incr_num;
     }
     coeffs[0] %= len;
     coeffs[1] %= len;
@@ -40,13 +39,12 @@ void compute_lincomb(char **commands, int com_count, __int128_t len, __int128_t 
 
 int main() {
   FILE *fp = fopen("input.txt" , "r");
-  int com_count;
-  fscanf(fp, "%d\n", &com_count);
-  char **commands = calloc(com_count, sizeof(char*));
-  for (int j = 0; j < com_count; j++) {
-    commands[j] = calloc(20, sizeof(char));
-    fgets(commands[j], 20, fp);
-  }
+
+  char **commands = calloc(200, sizeof(char*));
+  for (int j = 0; j < 200; j++) commands[j] = calloc(25, sizeof(char));
+
+  int com_count = 0;
+  while (fgets(commands[com_count++], 25, fp) != NULL);
   fclose(fp);
 
   // Part 1
