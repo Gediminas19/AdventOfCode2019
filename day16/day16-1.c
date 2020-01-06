@@ -38,8 +38,11 @@ int apply_fft(int *work, int len) {
 }
 
 int main() {
+  FILE *fp = fopen("input.txt" , "r");
+
   char read[1000];
-  scanf("%s", read);
+  fscanf(fp, "%s", read);
+  fclose(fp);
 
   int len = strlen(read);
   int *work = calloc(len, sizeof(int));
@@ -48,7 +51,7 @@ int main() {
   // Part 1
   apply_fft(work, len);
 
-  for (int j = 0; j < len; j++) {
+  for (int j = 0; j < 8; j++) {
     printf("%d", work[j]);
   }
   puts("");

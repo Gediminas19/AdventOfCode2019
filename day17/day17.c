@@ -3,13 +3,17 @@
 #include <stdlib.h>
 #include <string.h>
 #include "intcode_comp.h"
+#include "day17-help.h"
 
 int main() {
+  FILE *fp = fopen("input.txt" , "r");
+
   int len;
-  scanf("%d\n", &len);
+  fscanf(fp, "%d\n", &len);
 
   long *work = calloc(len, sizeof(long));
-  for (int j = 0; j < len; j++) scanf("%li,", &work[j]);
+  for (int j = 0; j < len; j++) fscanf(fp, "%li,", &work[j]);
+  fclose(fp);
 
   intcode_comp *comp = init_comp(work, len);
 
@@ -49,7 +53,6 @@ int main() {
       col++;
     }
   }
-  // printf("Rows: %d, Cols: %d\n", rows, cols);
 
   // Part 1
   int calabar = 0;
@@ -59,17 +62,10 @@ int main() {
           && view[j][k - 1] == '#' && view[j][k + 1] == '#') calabar += (j-1)*(k-1);
     }
   }
-  printf("Sum of alignment parameters: %d\n", calabar);
-
-  for (int j = 0; j < 53; j++) {
-    for (int k = 0; k < 47; k++) {
-      printf("%c", view[j][k]);
-    }
-    puts("");
-  }
-  free(comp);
+  printf("Sum of alignment parameters: %d\n\n", calabar);
 
   // Part 2
+  char *twists = calloc(250, sizeof(char));
   int cumdist = 0;
   while (true) {
     // printf("(%d, %d) - %d\n", botx, boty, botdir);
@@ -102,56 +98,60 @@ int main() {
       botx = ax;
       boty = ay;
     } else if (view[ay][ax] == '.') {
-      if (cumdist > 0) printf("%d,", cumdist);
+      if (cumdist > 0) sprintf(twists + strlen(twists), "%d,", cumdist);
       cumdist = 0;
       if (view[ly][lx] == '#') {
         botdir = (botdir - 1 + 4) % 4;
-        printf("L,");
+        sprintf(twists + strlen(twists), "L,");
       } else if (view[ry][rx] == '#') {
         botdir = (botdir + 1) % 4;
-        printf("R,");
-      } else {
-        puts("");
-        break;
-      }
+        sprintf(twists + strlen(twists), "R,");
+      } else break;
     }
   }
+  printf("Total Moves Needed: %s\n", twists);
 
-  char comb[] = "A,B,A,B,C,C,B,C,B,A\n";
-  char funca[] = "R,12,L,8,R,12\n";
-  char funcb[] = "R,8,R,6,R,6,R,8\n";
-  char funcc[] = "R,8,L,8,R,8,R,4,R,4\n";
-  char feed[] = "n\n";
+  char *routineA = calloc(22, sizeof(char));
+  char *routineB = calloc(22, sizeof(char));
+  char *routineC = calloc(22, sizeof(char));
+  char *routineMain = calloc(22, sizeof(char));
+  decompose(twists, routineA, routineB, routineC, routineMain);
 
   work[0] = 2;
-  comp = init_comp(work, len);
+  reset_comp(comp, work, len);
 
   run(comp);
-  while (more_outputs(comp)) printf("%c", (char) get_output(comp));
-  for (int j = 0; j < strlen(comb); j++) { printf("%c", comb[j]); add_input(comp, comb[j]); }
-  run(comp);
-  while (more_outputs(comp)) printf("%c", (char) get_output(comp));
-  for (int j = 0; j < strlen(funca); j++) { printf("%c", funca[j]); add_input(comp, funca[j]); }
-  run(comp);
-  while (more_outputs(comp)) printf("%c", (char) get_output(comp));
-  for (int j = 0; j < strlen(funcb); j++) { printf("%c", funcb[j]); add_input(comp, funcb[j]); }
-  run(comp);
-  while (more_outputs(comp)) printf("%c", (char) get_output(comp));
-  for (int j = 0; j < strlen(funcc); j++) { printf("%c", funcc[j]); add_input(comp, funcc[j]); }
-  run(comp);
-  while (more_outputs(comp)) printf("%c", (char) get_output(comp));
-  for (int j = 0; j < strlen(feed); j++) { printf("%c", feed[j]); add_input(comp, feed[j]); }
-  run(comp);
+  ascii_out(comp);
+  printf("%s", routineMain);
+  ascii_in(comp, routineMain);
 
-  long dust;
-  while (more_outputs(comp)) {
-    dust = get_output(comp);
-    printf("%c", (char) dust);
-  }
+  run(comp);
+  ascii_out(comp);
+  printf("%s", routineA);
+  ascii_in(comp, routineA);
+
+  run(comp);
+  ascii_out(comp);
+  printf("%s", routineB);
+  ascii_in(comp, routineB);
+
+  run(comp);
+  ascii_out(comp);
+  printf("%s", routineC);
+  ascii_in(comp, routineC);
+
+  run(comp);
+  ascii_out(comp);
+  puts("n");
+  ascii_in_ln(comp, "n");
+
+  run(comp);
+  ascii_out(comp);
+
+  long dust = get_output(comp);
   printf("Dust collected: %ld\n", dust);
 
-
   free(work);
-  free(comp);
+  free_comp(comp);
   return 0;
 }

@@ -20,28 +20,53 @@ void enq(chain *inputs, long input) {
   inputs->end = inputs->end->next;
 }
 
-long deq(chain *inputs) {
-  long res = inputs->start->input;
+void deq(chain *inputs) {
   wrap *to_free = inputs->start;
   inputs->start = inputs->start->next;
   free(to_free);
-  return res;
+}
+
+long peek(chain *inputs) {
+  return inputs->start->input;
 }
 
 bool chain_empty(chain *inputs) {
   return inputs->start == NULL;
 }
 
-void add_input(intcode_comp *amp, long input) {
-  enq(amp->inputs, input);
+void add_input(intcode_comp *comp, long input) {
+  enq(comp->inputs, input);
 }
 
-bool more_outputs(intcode_comp *amp) {
-  return !chain_empty(amp->outputs);
+bool more_outputs(intcode_comp *comp) {
+  return !chain_empty(comp->outputs);
 }
 
-long get_output(intcode_comp *amp) {
-  return deq(amp->outputs);
+long get_output(intcode_comp *comp) {
+  long top = peek(comp->outputs);
+  deq(comp->outputs);
+  return top;
+}
+
+long peek_output(intcode_comp *comp) {
+  return peek(comp->outputs);
+}
+
+void ascii_in(intcode_comp *comp, char *input) {
+  for (int j = 0; j < strlen(input); j++) add_input(comp, input[j]);
+}
+
+void ascii_in_ln(intcode_comp *comp, char *input) {
+  ascii_in(comp, input);
+  add_input(comp, '\n');
+}
+
+void ascii_out(intcode_comp *comp) {
+  while (more_outputs(comp)) {
+    long top = peek_output(comp);
+    if (top >= 128) break;
+    printf("%c", (char) get_output(comp));
+  }
 }
 
 intcode_comp *init_comp(long *work, int len) {
@@ -55,68 +80,93 @@ intcode_comp *init_comp(long *work, int len) {
   return comp;
 }
 
-void set_params(intcode_comp *amp, long **params, int paramcount) {
-  long temp = amp->code[amp->pc]/100;
+void reset_comp(intcode_comp *comp, long *work, int len) {
+  comp->pc = 0;
+  comp->relbase = 0;
+  memset(comp->code, 0, 200000*sizeof(long));
+  memcpy(comp->code, work, len*sizeof(long));
+  while (!chain_empty(comp->inputs)) deq(comp->inputs);
+  while (!chain_empty(comp->outputs)) deq(comp->outputs);
+}
+
+void free_comp(intcode_comp *comp) {
+  free(comp->code);
+  while (!chain_empty(comp->inputs)) deq(comp->inputs);
+  free(comp->inputs);
+  while (!chain_empty(comp->outputs)) deq(comp->outputs);
+  free(comp->outputs);
+  free(comp);
+}
+
+void set_params(intcode_comp *comp, long **params, int paramcount) {
+  long temp = comp->code[comp->pc]/100;
   for (int i = 0; i < paramcount; i++) {
     int paramode = temp % 10;
-    if (paramode == 0) params[i] = &amp->code[amp->code[amp->pc + 1 + i]];
-    else if (paramode == 2) params[i] = &amp->code[amp->relbase + amp->code[amp->pc + 1 + i]];
-    else if (paramode == 1) params[i] = &amp->code[amp->pc + 1 + i];
+    if (paramode == 0) params[i] = &comp->code[comp->code[comp->pc + 1 + i]];
+    else if (paramode == 2) params[i] = &comp->code[comp->relbase + comp->code[comp->pc + 1 + i]];
+    else if (paramode == 1) params[i] = &comp->code[comp->pc + 1 + i];
     temp /= 10;
   }
 }
 
-bool run(intcode_comp *amp) {
-  long **params = calloc(3, sizeof(long*));
-  while (amp->code[amp->pc] != 99) {
-    // printf("pc %d: %ld\n", amp->pc, amp->code[amp->pc]);
-    switch (amp->code[amp->pc] % 100) {
-      case 1:
-        set_params(amp, params, 3);
-        *params[2] = *params[0] + *params[1];
-        amp->pc += 4;
-        break;
-      case 2:
-        set_params(amp, params, 3);
-        *params[2] = *params[0] * *params[1];
-        amp->pc += 4;
-        break;
-      case 3:
-        if (chain_empty(amp->inputs)) return true;
-        set_params(amp, params, 1);
-        *params[0] = deq(amp->inputs);
-        amp->pc += 2;
-        break;
-      case 4:
-        set_params(amp, params, 1);
-        amp->pc += 2;
-        enq(amp->outputs, *params[0]);
-        break;
-      case 5:
-        set_params(amp, params, 2);
-        if (*params[0] != 0) amp->pc = *params[1];
-        else amp->pc += 3;
-        break;
-      case 6:
-        set_params(amp, params, 2);
-        if (*params[0] == 0) amp->pc = *params[1];
-        else amp->pc += 3;
-        break;
-      case 7:
-        set_params(amp, params, 3);
-        *params[2] = *params[0] < *params[1]? 1 : 0;
-        amp->pc += 4;
-        break;
-      case 8:
-        set_params(amp, params, 3);
-        *params[2] = *params[0] == *params[1]? 1 : 0;
-        amp->pc += 4;
-        break;
-      case 9:
-        set_params(amp, params, 1);
-        amp->relbase += *params[0];
-        amp->pc += 2;
-    }
+int step(intcode_comp *comp) {
+  long *params[3];
+  switch (comp->code[comp->pc] % 100) {
+    case 1:
+      set_params(comp, params, 3);
+      *params[2] = *params[0] + *params[1];
+      comp->pc += 4;
+      return 0;
+    case 2:
+      set_params(comp, params, 3);
+      *params[2] = *params[0] * *params[1];
+      comp->pc += 4;
+      return 0;
+    case 3:
+      if (chain_empty(comp->inputs)) return 1;
+      set_params(comp, params, 1);
+      *params[0] = peek(comp->inputs);
+      deq(comp->inputs);
+      comp->pc += 2;
+      return 0;
+    case 4:
+      set_params(comp, params, 1);
+      comp->pc += 2;
+      enq(comp->outputs, *params[0]);
+      return 2;
+    case 5:
+      set_params(comp, params, 2);
+      if (*params[0] != 0) comp->pc = *params[1];
+      else comp->pc += 3;
+      return 0;
+    case 6:
+      set_params(comp, params, 2);
+      if (*params[0] == 0) comp->pc = *params[1];
+      else comp->pc += 3;
+      return 0;
+    case 7:
+      set_params(comp, params, 3);
+      *params[2] = *params[0] < *params[1]? 1 : 0;
+      comp->pc += 4;
+      return 0;
+    case 8:
+      set_params(comp, params, 3);
+      *params[2] = *params[0] == *params[1]? 1 : 0;
+      comp->pc += 4;
+      return 0;
+    case 9:
+      set_params(comp, params, 1);
+      comp->relbase += *params[0];
+      comp->pc += 2;
+      return 0;
+    case 99:
+      comp->pc += 1;
+      return -1;
   }
-  return false;
+}
+
+bool run(intcode_comp *comp) {
+  int status;
+  while (abs(status = step(comp)) != 1);
+  return status == 1;
 }

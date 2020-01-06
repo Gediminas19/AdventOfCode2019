@@ -4,8 +4,11 @@
 #include <string.h>
 
 int main() {
+  FILE *fp = fopen("input.txt" , "r");
+
   char read[1000];
-  scanf("%s", read);
+  fscanf(fp, "%s", read);
+  fclose(fp);
 
   int len = strlen(read);
   int *work = calloc(len, sizeof(int));
@@ -31,18 +34,10 @@ int main() {
   // in fact, each phase we simply calculate the cumulative sum from the end of the
   // vector while taking mod 10; this cumulative sum vector is then the input vector
   // for the next phase!
-  int *worksmall = calloc(necessary, sizeof(int));
+  int *worksmall = calloc(necessary + 1, sizeof(int));
   for (int j = offset; j < grand_len; j++) worksmall[j - offset] = work[j%len];
-  int *worktemp = calloc(necessary + 1, sizeof(int));
-  for (int i = 0; i < 100; i++) {
-    for (int j = necessary - 1; j >= 0; j--) worktemp[j] = (worktemp[j + 1] + worksmall[j])%10;
-
-    memcpy(worksmall, worktemp, necessary*sizeof(int));
-    memset(worktemp, 0, (necessary + 1)*sizeof(int));
-
-    // for (int j = 0; j < 8; j++) printf("%d", worksmall[j]);
-    // puts("");
-  }
+  for (int i = 0; i < 100; i++)
+    for (int j = necessary - 1; j >= 0; j--) worksmall[j] = (worksmall[j + 1] + worksmall[j])%10;
 
   for (int j = 0; j < 8; j++) printf("%d", worksmall[j]);
   puts("");

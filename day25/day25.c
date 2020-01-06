@@ -13,6 +13,7 @@ int main() {
 
   long *work = calloc(len, sizeof(long));
   for (int j = 0; j < len; j++) fscanf(fp, "%li,", &work[j]);
+  fclose(fp);
 
   intcode_comp *comp = init_comp(work, len);
 
