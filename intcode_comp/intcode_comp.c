@@ -92,6 +92,16 @@ void ascii_out(intcode_comp *comp) {
   }
 }
 
+void ascii_out_str(intcode_comp *comp, char *into) {
+  int counter = 0;
+  while (more_outputs(comp)) {
+    long top = peek_output(comp);
+    if (top >= 128) break;
+    into[counter++] = (char) get_output(comp);
+  }
+  into[counter] = '\0';
+}
+
 intcode_comp *init_comp(long *work, int len) {
   intcode_comp *comp = calloc(1, sizeof(intcode_comp));
   comp->pc = 0;

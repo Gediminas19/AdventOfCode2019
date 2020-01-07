@@ -197,8 +197,7 @@ int main() {
   set<char> keysleft;
   for (auto elem : alphalocs) if (islower(elem.first)) keysleft.insert(elem.first);
 
-  recurse(room, neighbors, doors, memoizer, keysleft, start_poses);
-  cout << "Total steps needed: " << memoizer[make_pair(start_poses, keysleft)] << endl;
+  cout << "Total steps needed: " << recurse(room, neighbors, doors, memoizer, keysleft, start_poses) << endl;
 
   return 0;
 }

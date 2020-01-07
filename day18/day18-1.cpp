@@ -175,11 +175,7 @@ int main() {
   set<char> keysleft;
   for (auto elem : alphalocs) if (islower(elem.first)) keysleft.insert(elem.first);
 
-  int mindist = INT_MAX;
-  recurse(room, neighbors, doors, memoizer, keysleft, start_pos);
-  // cout << "Min dist to all keys is " << mindist << endl;
-
-  cout << "Total steps needed: " << memoizer[make_pair(start_pos, keysleft)] << endl;
+  cout << "Total steps needed: " << recurse(room, neighbors, doors, memoizer, keysleft, start_pos) << endl;
 
   return 0;
 }

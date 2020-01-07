@@ -44,6 +44,7 @@ long peek_output(intcode_comp *comp);
 void ascii_in(intcode_comp *comp, char *input);
 void ascii_in_ln(intcode_comp *comp, char *input);
 void ascii_out(intcode_comp *comp);
+void ascii_out_str(intcode_comp *comp, char *into);
 
 intcode_comp *init_comp(long *work, int len);
 intcode_comp *init_comp_file(char *filename);
