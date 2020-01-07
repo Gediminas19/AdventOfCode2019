@@ -23,10 +23,10 @@ void compute_lincomb(char **commands, int com_count, __int128_t len, __int128_t 
       coeffs[1] *= -1;
       coeffs[1] -= 1;
     } else if (strstr(commands[j], "cut") != NULL) {
-      int cut_num = atoi(commands[j] + strcspn(commands[j], "1234567890-"));
+      int cut_num = atoi(strrchr(commands[j], ' ') + 1);
       coeffs[1] -= cut_num;
     } else if (strstr(commands[j], "increment") != NULL) {
-      int incr_num = atoi(commands[j] + strcspn(commands[j], "1234567890-"));
+      int incr_num = atoi(strrchr(commands[j], ' ') + 1);
       coeffs[0] *= incr_num;
       coeffs[1] *= incr_num;
     }

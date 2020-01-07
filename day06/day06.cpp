@@ -27,13 +27,15 @@ int main() {
   ios::sync_with_stdio(0);
   cin.tie(0);
 
-  int edgeCount;
-  cin >> edgeCount;
+  fstream fp;
+  fp.open("input.txt");
+
   unordered_map<string, node*> dict;
 
-  for (int j = 0; j < edgeCount; j++) {
-    string parent, child;
-    cin >> parent >> child;
+  string parent, child;
+  while (!fp.eof()) {
+    getline(fp, parent, ')');
+    getline(fp, child);
 
     if (dict.find(parent) == dict.end()) {
       dict[parent] = newNode(parent);
@@ -45,6 +47,7 @@ int main() {
     dict[child]->parent = dict[parent];
     dict[parent]->children.push_back(dict[child]);
   }
+  fp.close();
 
   int totalOrbits = getCumDepth(dict["COM"], 0);
   cout << "Total Orbits: " << totalOrbits << endl;

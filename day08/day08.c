@@ -1,16 +1,18 @@
-  #include <stdio.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 int main() {
+  FILE *fp = fopen("input.txt", "r");
   char c;
-  char data[100][150];
+  int data[100][150];
   for (int j = 0; j < 100; j++) {
     for (int k = 0; k < 150; k++) {
-      scanf("%c", &c);
+      fscanf(fp, "%c", &c);
       data[j][k] = c;
     }
   }
+  fclose(fp);
 
   int minceros = 150, mincerow = -1;
   for (int j = 0; j < 100; j++) {
@@ -45,7 +47,7 @@ int main() {
   puts("Part 2: ");
   for (int m = 0; m < 6; m++) {
     for (int n = 0; n < 25; n++) {
-      if (viewed[m*25 + n] == '0') printf("\u25a0");
+      if (viewed[m*25 + n] == '1') printf("\u25a0");
       else printf(" ");
     }
     puts("");

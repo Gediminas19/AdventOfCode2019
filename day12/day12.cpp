@@ -23,16 +23,20 @@ long lcm(long u, long v) {
 }
 
 int main() {
-  // below is copied from input data
-  int moonpos[4][3] = {{12, 0, -15}, {-8, -5, -10}, {7, -17, 1}, {2, -11, -6}};
+  fstream fp;
+  fp.open("input.txt");
 
+  int read_pos;
   pair<array<int, 4>, array<int, 4>> posvelaxes[3];
-  for (int axis = 0; axis < 3; axis++) {
-    for (int moon = 0; moon < 4; moon++) {
-      posvelaxes[axis].first[moon] = moonpos[moon][axis];
+  for (int moon = 0; moon < 4; moon++) {
+    for (int axis = 0; axis < 3; axis++) {
+      fp.ignore(50, '=');
+      fp >> read_pos;
+      posvelaxes[axis].first[moon] = read_pos;
       posvelaxes[axis].second[moon] = 0;
     }
   }
+  fp.close();
 
   bool notdone = true;
   long found[3] = {0, 0, 0};

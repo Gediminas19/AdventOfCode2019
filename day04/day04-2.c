@@ -4,8 +4,12 @@
 #include <string.h>
 
 int main() {
-  int start = 264793;
-  int end = 803935;
+  int start, end;
+
+  FILE *fp = fopen("input.txt", "r");
+  fscanf(fp, "%d-%d", &start, &end);
+  fclose(fp);
+
   int success = 0;
   for (int num = start; num <= end; num++) {
     bool doublon = false, unmonotone = false;
@@ -32,7 +36,7 @@ int main() {
       success += 1;
     }
   }
-  printf("%d\n", success);
+  printf("Part 2: %d\n", success);
 
   return 0;
 }

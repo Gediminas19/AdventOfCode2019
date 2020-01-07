@@ -41,24 +41,35 @@ int main() {
   ios::sync_with_stdio(0);
   cin.tie(0);
 
-  long reacount;
-  scanf("%ld\n", &reacount);
+  fstream fp;
+  fp.open("input.txt");
 
   unordered_map<string, pair<long, vector<pair<long, string>>>> reactions;
-  for (long j = 0; j < reacount; j++) {
+  while (!fp.eof()) {
+    char reactants_str[100];
+    fp.getline(reactants_str, 100, '=');
+
+    char *reactok = strtok(reactants_str, ",");
+
     vector<pair<long, string>> reactants;
     long reamount;
     char reactant[10];
-    while (scanf("%ld %s", &reamount, reactant) == 2) {
+    while (reactok != NULL) {
+      sscanf(reactok, "%ld %s", &reamount, reactant);
       reactants.push_back(make_pair(reamount, string(reactant)));
+      reactok = strtok(NULL, ",");
     }
-    scanf("=>");
+
+    fp.ignore(5, ' ');
+    char product_str[10];
+    fp.getline(product_str, 10);
 
     long pramount;
     char product[10];
-    scanf("%ld %s", &pramount, product);
+    sscanf(product_str, "%ld %s", &pramount, product);
     reactions[string(product)] = make_pair(pramount, reactants);
   }
+  fp.close();
 
   // Part 1
   cout << calculate(reactions, 1, false) << " ore needed for 1 fuel" << endl << endl;

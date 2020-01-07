@@ -14,9 +14,14 @@ int main() {
   ios::sync_with_stdio(0);
   cin.tie(0);
 
+  ifstream fp;
+  fp.open("input.txt");
+
   string line1, line2;
-  getline(cin, line1);
-  getline(cin, line2);
+  getline(fp, line1);
+  getline(fp, line2);
+  fp.close();
+
   istringstream read1(line1);
   istringstream read2(line2);
 
@@ -122,8 +127,9 @@ int main() {
   }
   interdist.erase(remove(interdist.begin(), interdist.end(), 0), interdist.end());
   intertime.erase(remove(intertime.begin(), intertime.end(), 0), intertime.end());
-  cout << *min_element(interdist.begin(), interdist.end()) << endl;
-  cout << *min_element(intertime.begin(), intertime.end()) << endl;
+
+  cout << "Distance to closest intersection: " << *min_element(interdist.begin(), interdist.end()) << endl;
+  cout << "Fewest combined steps to intersection: " << *min_element(intertime.begin(), intertime.end()) << endl;
 
   return 0;
 }

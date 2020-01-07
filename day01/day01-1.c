@@ -4,11 +4,13 @@
 
 int main()
 {
+  FILE *fp = fopen("input.txt", "r");
   int mass;
   int total_fuel = 0;
-  while(scanf("%d\n", &mass) != EOF) {
+  while(fscanf(fp, "%d\n", &mass) != EOF) {
     total_fuel += mass/3 - 2;
   }
+  fclose(fp);
   printf("Part 1: %d\n", total_fuel);
 
   return 0;
